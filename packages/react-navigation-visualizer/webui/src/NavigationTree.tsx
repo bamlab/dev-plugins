@@ -51,6 +51,7 @@ export function NavigationTree({ logs }: Props) {
       </Layout.Content>
       {hasCurrentItem ? (
         <Sidebar
+          Legend={<Legend />}
           action={currentNavigationItem.action}
           state={currentNavigationItem.state}
           stack={currentNavigationItem.stack}
@@ -221,4 +222,28 @@ const generateColor = (key: string) => {
   console.log(newColor);
 
   return newColor;
+};
+
+const Legend = () => {
+  return (
+    <div style={{ padding: 12 }}>
+      <NodeContainer style={{ borderColor: 'hsl(0, 70%, 50%)' }}>
+        <Leaf title="Screen" color="hsl(0, 70%, 50%)" />
+        <div style={{ height: 4 }} />
+        <NodeTitle style={{ color: 'hsl(0, 70%, 50%)' }}>Stack Navigator</NodeTitle>
+      </NodeContainer>
+      <div style={{ height: 12 }} />
+      <NodeContainer style={{ borderColor: 'hsl(0, 70%, 50%)' }}>
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <Leaf title="Unselected Tab" color="hsl(0, 70%, 50%)" />
+          <div style={{ width: 4 }} />
+          <SelectedLeafContainer style={{ borderColor: 'hsl(0, 70%, 50%)' }}>
+            <Leaf title="Selected Tab" color="hsl(0, 70%, 50%)" />
+          </SelectedLeafContainer>
+        </div>
+        <div style={{ height: 4 }} />
+        <NodeTitle style={{ color: 'hsl(0, 70%, 50%)' }}>Tab Navigator</NodeTitle>
+      </NodeContainer>
+    </div>
+  );
 };
