@@ -86,10 +86,12 @@ const HalfContent = styled.div({
 
 const Spacer = styled.div({
   height: 4,
+  width: 4,
 });
 
 const LeafContainer = styled.div(({ theme: antdTheme }) => ({
   display: 'flex',
+  flex: 1,
   backgroundColor: antdTheme.token?.colorPrimary,
   borderRadius: 4,
   alignItems: 'center',
@@ -138,6 +140,14 @@ const NodeTitle = styled(Typography)(({ theme }) => ({
   alignSelf: 'flex-start',
 }));
 
+const TabContainer = styled.div({
+  display: 'flex',
+  flex: 1,
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-around',
+});
+
 const Node = ({
   name,
   state,
@@ -154,25 +164,28 @@ const Node = ({
 
   const color = generateColor(state.key);
 
+  const StackWrapper = state.type === 'tab' ? TabContainer : React.Fragment;
+
   return (
     <NodeContainer style={{ borderColor: color }}>
-      {routes.toReversed().map((route, index) => (
-        <React.Fragment key={index}>
-          {route.state?.routes && route.state.routes.length ? (
-            <Node name={route.name} state={route.state} parentColor={color} />
-          ) : (
-            <Leaf
-              title={route.name}
-              isSelectedTab={
-                state.type === 'tab' && state.index === state.routes.length - 1 - index
-              }
-              color={color}
-            />
-          )}
-          <Spacer />
-        </React.Fragment>
-      ))}
-      <Spacer />
+      <StackWrapper>
+        {routes.toReversed().map((route, index) => (
+          <React.Fragment key={index}>
+            {route.state?.routes && route.state.routes.length ? (
+              <Node name={route.name} state={route.state} parentColor={color} />
+            ) : (
+              <Leaf
+                title={route.name}
+                isSelectedTab={
+                  state.type === 'tab' && state.index === state.routes.length - 1 - index
+                }
+                color={color}
+              />
+            )}
+            {index < routes.length - 1 ? <Spacer /> : null}
+          </React.Fragment>
+        ))}
+      </StackWrapper>
       <NodeTitle style={{ color }}>{name}</NodeTitle>
     </NodeContainer>
   );
