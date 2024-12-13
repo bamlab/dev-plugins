@@ -126,7 +126,11 @@ const NodeContainer = styled.div(({ theme: antdTheme }) => ({
   borderWidth: 1,
   border: 'solid',
   borderColor: antdTheme.token?.colorPrimary,
+  borderTopWidth: 0,
+  borderTopLeftRadius: 0,
+  borderTopRightRadius: 0,
   padding: 8,
+  paddingTop: 4,
 }));
 
 const NodeTitle = styled(Typography)(({ theme }) => ({
