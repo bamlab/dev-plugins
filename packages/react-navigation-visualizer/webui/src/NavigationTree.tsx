@@ -188,7 +188,7 @@ const generateColor = (key: string) => {
     return colorMap[key];
   }
 
-  currentHue = (currentHue + 9) % 360;
+  currentHue = (currentHue + 15) % 360;
   const newColor = `hsl(${currentHue}, 70%, 50%)`;
 
   colorMap[key] = newColor;
