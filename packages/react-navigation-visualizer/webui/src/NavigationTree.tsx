@@ -99,6 +99,15 @@ const LeafContainer = styled.div(({ theme: antdTheme }) => ({
   padding: 8,
 }));
 
+const SelectedLeafContainer = styled.div({
+  display: 'flex',
+  flex: 1,
+  padding: 4,
+  border: 'dashed',
+  borderRadius: 4,
+  borderWidth: 2,
+});
+
 const LeafTitle = styled(Typography.Text)({
   color: 'white',
 });
@@ -112,12 +121,15 @@ const Leaf = ({
   isSelectedTab?: boolean;
   color: string;
 }) => {
+  const Wrapper = isSelectedTab ? SelectedLeafContainer : React.Fragment;
   return (
-    <LeafContainer style={{ backgroundColor: color }}>
-      <LeafTitle style={{ textDecoration: isSelectedTab ? 'underline' : 'none' }}>
-        {title}
-      </LeafTitle>
-    </LeafContainer>
+    <Wrapper style={{ borderColor: color }}>
+      <LeafContainer style={{ backgroundColor: color }}>
+        <LeafTitle style={{ textDecoration: isSelectedTab ? 'underline' : 'none' }}>
+          {title}
+        </LeafTitle>
+      </LeafContainer>
+    </Wrapper>
   );
 };
 
