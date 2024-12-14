@@ -110,9 +110,10 @@ const SelectedLeafContainer = styled.div<{ color: string }>(({ color }) => ({
   borderWidth: 2,
 }));
 
-const LeafTitle = styled(Typography.Text)({
+const LeafTitle = styled(Typography.Text)<{ isSelected?: boolean }>(({ isSelected }) => ({
   color: 'white',
-});
+  textDecoration: isSelected ? 'underline' : 'none',
+}));
 
 const Leaf = ({
   title,
@@ -127,9 +128,7 @@ const Leaf = ({
   return (
     <Wrapper color={color}>
       <LeafContainer color={color}>
-        <LeafTitle style={{ textDecoration: isSelectedTab ? 'underline' : 'none' }}>
-          {title}
-        </LeafTitle>
+        <LeafTitle isSelected={isSelectedTab}>{title}</LeafTitle>
       </LeafContainer>
     </Wrapper>
   );
@@ -150,8 +149,9 @@ const NodeContainer = styled.div<{ color: string; isClosed?: boolean }>(({ color
   cursor: 'pointer',
 }));
 
-const NodeTitle = styled(Typography)(({ theme }) => ({
+const NodeTitle = styled(Typography)<{ color: string }>(({ color }) => ({
   alignSelf: 'flex-start',
+  color,
 }));
 
 const TabContainer = styled.div({
@@ -211,7 +211,7 @@ const Node = ({
           </React.Fragment>
         ))}
       </StackWrapper>
-      <NodeTitle style={{ color }}>{name}</NodeTitle>
+      <NodeTitle color={color}>{name}</NodeTitle>
     </NodeContainer>
   );
 };
@@ -234,7 +234,7 @@ const ClosedNode = ({
         e.stopPropagation();
       }}
       isClosed>
-      <NodeTitle style={{ color }}>{name}</NodeTitle>
+      <NodeTitle color={color}>{name}</NodeTitle>
     </NodeContainer>
   );
 };
@@ -265,7 +265,7 @@ const Legend = () => {
       <NodeContainer color="hsl(0, 70%, 50%)">
         <Leaf title="Screen" color="hsl(0, 70%, 50%)" />
         <div style={{ height: 4 }} />
-        <NodeTitle style={{ color: 'hsl(0, 70%, 50%)' }}>Stack Navigator</NodeTitle>
+        <NodeTitle color="hsl(0, 70%, 50%)">Stack Navigator</NodeTitle>
       </NodeContainer>
       <div style={{ height: 12 }} />
       <NodeContainer color="hsl(0, 70%, 50%)">
@@ -277,7 +277,7 @@ const Legend = () => {
           </SelectedLeafContainer>
         </div>
         <div style={{ height: 4 }} />
-        <NodeTitle style={{ color: 'hsl(0, 70%, 50%)' }}>Tab Navigator</NodeTitle>
+        <NodeTitle color="hsl(0, 70%, 50%)">Tab Navigator</NodeTitle>
       </NodeContainer>
     </div>
   );
