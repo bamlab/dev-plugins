@@ -90,15 +90,14 @@ const Spacer = styled.div({
   width: 4,
 });
 
-const LeafContainer = styled.div(({ theme: antdTheme }) => ({
+const LeafContainer = styled.div({
   display: 'flex',
   flex: 1,
-  backgroundColor: antdTheme.token?.colorPrimary,
   borderRadius: 4,
   alignItems: 'center',
   justifyContent: 'center',
   padding: 8,
-}));
+});
 
 const SelectedLeafContainer = styled.div({
   display: 'flex',
@@ -140,7 +139,6 @@ const NodeContainer = styled.div(({ theme: antdTheme }) => ({
   borderRadius: 4,
   borderWidth: 1,
   border: 'solid',
-  borderColor: antdTheme.token?.colorPrimary,
   borderTopWidth: 0,
   borderTopLeftRadius: 0,
   borderTopRightRadius: 0,
@@ -149,7 +147,6 @@ const NodeContainer = styled.div(({ theme: antdTheme }) => ({
 }));
 
 const NodeTitle = styled(Typography)(({ theme }) => ({
-  color: theme.token?.colorPrimary,
   alignSelf: 'flex-start',
 }));
 
