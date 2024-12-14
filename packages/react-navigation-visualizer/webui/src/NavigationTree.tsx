@@ -259,25 +259,27 @@ const generateColor = (key: string) => {
   return newColor;
 };
 
+const legendRed = 'hsl(0, 70%, 50%)';
+
 const Legend = () => {
   return (
     <div style={{ padding: 12 }}>
-      <NodeContainer color="hsl(0, 70%, 50%)">
-        <Leaf title="Screen" color="hsl(0, 70%, 50%)" />
+      <NodeContainer color={legendRed}>
+        <Leaf title="Screen" color={legendRed} />
         <div style={{ height: 4 }} />
-        <NodeTitle color="hsl(0, 70%, 50%)">Stack Navigator</NodeTitle>
+        <NodeTitle color={legendRed}>Stack Navigator</NodeTitle>
       </NodeContainer>
       <div style={{ height: 12 }} />
-      <NodeContainer color="hsl(0, 70%, 50%)">
+      <NodeContainer color={legendRed}>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <Leaf title="Unselected Tab" color="hsl(0, 70%, 50%)" />
+          <Leaf title="Unselected Tab" color={legendRed} />
           <div style={{ width: 4 }} />
-          <SelectedLeafContainer color="hsl(0, 70%, 50%)">
-            <Leaf title="Selected Tab" color="hsl(0, 70%, 50%)" />
+          <SelectedLeafContainer color={legendRed}>
+            <Leaf title="Selected Tab" color={legendRed} />
           </SelectedLeafContainer>
         </div>
         <div style={{ height: 4 }} />
-        <NodeTitle color="hsl(0, 70%, 50%)">Tab Navigator</NodeTitle>
+        <NodeTitle color={legendRed}>Tab Navigator</NodeTitle>
       </NodeContainer>
     </div>
   );
