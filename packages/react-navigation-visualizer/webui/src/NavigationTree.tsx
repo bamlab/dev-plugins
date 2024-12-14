@@ -90,14 +90,15 @@ const Spacer = styled.div({
   width: 4,
 });
 
-const LeafContainer = styled.div({
+const LeafContainer = styled.div<{ color: string }>(({ color }) => ({
   display: 'flex',
   flex: 1,
   borderRadius: 4,
+  backgroundColor: color,
   alignItems: 'center',
   justifyContent: 'center',
   padding: 8,
-});
+}));
 
 const SelectedLeafContainer = styled.div({
   display: 'flex',
@@ -124,7 +125,7 @@ const Leaf = ({
   const Wrapper = isSelectedTab ? SelectedLeafContainer : React.Fragment;
   return (
     <Wrapper style={{ borderColor: color }}>
-      <LeafContainer style={{ backgroundColor: color }}>
+      <LeafContainer color={color}>
         <LeafTitle style={{ textDecoration: isSelectedTab ? 'underline' : 'none' }}>
           {title}
         </LeafTitle>
