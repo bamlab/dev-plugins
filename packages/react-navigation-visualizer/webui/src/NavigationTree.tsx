@@ -133,17 +133,18 @@ const Leaf = ({
   );
 };
 
-const NodeContainer = styled.div(({ theme: antdTheme }) => ({
+const NodeContainer = styled.div<{ isClosed?: boolean }>(({ isClosed }) => ({
   display: 'flex',
   flexDirection: 'column',
   borderRadius: 4,
   borderWidth: 1,
   border: 'solid',
-  borderTopWidth: 0,
-  borderTopLeftRadius: 0,
-  borderTopRightRadius: 0,
+  borderTopWidth: isClosed ? 1 : 0,
+  borderTopLeftRadius: isClosed ? 4 : 0,
+  borderTopRightRadius: isClosed ? 4 : 0,
   padding: 8,
   paddingTop: 4,
+  cursor: 'pointer',
 }));
 
 const NodeTitle = styled(Typography)(({ theme }) => ({
@@ -167,6 +168,8 @@ const Node = ({
   state: NavigationState;
   parentColor: string;
 }) => {
+  const [isClosed, setIsClosed] = React.useState(false);
+
   const routes = state.routes;
   if (!routes || !routes.length) {
     return <Leaf title={name} color={parentColor} />;
@@ -176,11 +179,20 @@ const Node = ({
 
   const StackWrapper = state.type === 'tab' ? TabContainer : React.Fragment;
 
+  if (isClosed) {
+    return <ClosedNode name={name} color={color} openNode={() => setIsClosed(false)} />;
+  }
+
   return (
-    <NodeContainer style={{ borderColor: color }}>
+    <NodeContainer
+      style={{ borderColor: color }}
+      onClick={(e) => {
+        setIsClosed(true);
+        e.stopPropagation();
+      }}>
       <StackWrapper>
         {routes.toReversed().map((route, index) => (
-          <React.Fragment key={index}>
+          <React.Fragment key={route.key}>
             {route.state?.routes && route.state.routes.length ? (
               <Node name={route.name} state={route.state} parentColor={color} />
             ) : (
@@ -196,6 +208,28 @@ const Node = ({
           </React.Fragment>
         ))}
       </StackWrapper>
+      <NodeTitle style={{ color }}>{name}</NodeTitle>
+    </NodeContainer>
+  );
+};
+
+const ClosedNode = ({
+  name,
+  color,
+  openNode,
+}: {
+  name: string;
+  color: string;
+  openNode: () => void;
+}) => {
+  return (
+    <NodeContainer
+      style={{ borderColor: color }}
+      onClick={(e) => {
+        openNode();
+        e.stopPropagation();
+      }}
+      isClosed>
       <NodeTitle style={{ color }}>{name}</NodeTitle>
     </NodeContainer>
   );
