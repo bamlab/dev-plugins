@@ -100,14 +100,15 @@ const LeafContainer = styled.div<{ color: string }>(({ color }) => ({
   padding: 8,
 }));
 
-const SelectedLeafContainer = styled.div({
+const SelectedLeafContainer = styled.div<{ color: string }>(({ color }) => ({
   display: 'flex',
   flex: 1,
   padding: 4,
   border: 'dashed',
+  borderColor: color,
   borderRadius: 4,
   borderWidth: 2,
-});
+}));
 
 const LeafTitle = styled(Typography.Text)({
   color: 'white',
@@ -124,7 +125,7 @@ const Leaf = ({
 }) => {
   const Wrapper = isSelectedTab ? SelectedLeafContainer : React.Fragment;
   return (
-    <Wrapper style={{ borderColor: color }}>
+    <Wrapper color={color}>
       <LeafContainer color={color}>
         <LeafTitle style={{ textDecoration: isSelectedTab ? 'underline' : 'none' }}>
           {title}
@@ -271,7 +272,7 @@ const Legend = () => {
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <Leaf title="Unselected Tab" color="hsl(0, 70%, 50%)" />
           <div style={{ width: 4 }} />
-          <SelectedLeafContainer style={{ borderColor: 'hsl(0, 70%, 50%)' }}>
+          <SelectedLeafContainer color="hsl(0, 70%, 50%)">
             <Leaf title="Selected Tab" color="hsl(0, 70%, 50%)" />
           </SelectedLeafContainer>
         </div>
