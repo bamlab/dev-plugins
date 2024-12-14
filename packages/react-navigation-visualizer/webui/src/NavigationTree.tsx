@@ -133,12 +133,13 @@ const Leaf = ({
   );
 };
 
-const NodeContainer = styled.div<{ isClosed?: boolean }>(({ isClosed }) => ({
+const NodeContainer = styled.div<{ color: string; isClosed?: boolean }>(({ color, isClosed }) => ({
   display: 'flex',
   flexDirection: 'column',
   borderRadius: 4,
   borderWidth: 1,
   border: 'solid',
+  borderColor: color,
   borderTopWidth: isClosed ? 1 : 0,
   borderTopLeftRadius: isClosed ? 4 : 0,
   borderTopRightRadius: isClosed ? 4 : 0,
@@ -185,7 +186,7 @@ const Node = ({
 
   return (
     <NodeContainer
-      style={{ borderColor: color }}
+      color={color}
       onClick={(e) => {
         setIsClosed(true);
         e.stopPropagation();
@@ -224,6 +225,7 @@ const ClosedNode = ({
 }) => {
   return (
     <NodeContainer
+      color={color}
       style={{ borderColor: color }}
       onClick={(e) => {
         openNode();
@@ -258,13 +260,13 @@ const generateColor = (key: string) => {
 const Legend = () => {
   return (
     <div style={{ padding: 12 }}>
-      <NodeContainer style={{ borderColor: 'hsl(0, 70%, 50%)' }}>
+      <NodeContainer color="hsl(0, 70%, 50%)">
         <Leaf title="Screen" color="hsl(0, 70%, 50%)" />
         <div style={{ height: 4 }} />
         <NodeTitle style={{ color: 'hsl(0, 70%, 50%)' }}>Stack Navigator</NodeTitle>
       </NodeContainer>
       <div style={{ height: 12 }} />
-      <NodeContainer style={{ borderColor: 'hsl(0, 70%, 50%)' }}>
+      <NodeContainer color="hsl(0, 70%, 50%)">
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <Leaf title="Unselected Tab" color="hsl(0, 70%, 50%)" />
           <div style={{ width: 4 }} />
