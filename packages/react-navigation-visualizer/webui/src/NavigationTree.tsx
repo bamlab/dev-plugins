@@ -90,28 +90,30 @@ const Spacer = styled.div({
   width: 4,
 });
 
-const LeafContainer = styled.div(({ theme: antdTheme }) => ({
+const LeafContainer = styled.div<{ color: string }>(({ color }) => ({
   display: 'flex',
   flex: 1,
-  backgroundColor: antdTheme.token?.colorPrimary,
   borderRadius: 4,
+  backgroundColor: color,
   alignItems: 'center',
   justifyContent: 'center',
   padding: 8,
 }));
 
-const SelectedLeafContainer = styled.div({
+const SelectedLeafContainer = styled.div<{ color: string }>(({ color }) => ({
   display: 'flex',
   flex: 1,
   padding: 4,
   border: 'dashed',
+  borderColor: color,
   borderRadius: 4,
   borderWidth: 2,
-});
+}));
 
-const LeafTitle = styled(Typography.Text)({
+const LeafTitle = styled(Typography.Text)<{ isSelected?: boolean }>(({ isSelected }) => ({
   color: 'white',
-});
+  textDecoration: isSelected ? 'underline' : 'none',
+}));
 
 const Leaf = ({
   title,
@@ -124,33 +126,32 @@ const Leaf = ({
 }) => {
   const Wrapper = isSelectedTab ? SelectedLeafContainer : React.Fragment;
   return (
-    <Wrapper style={{ borderColor: color }}>
-      <LeafContainer style={{ backgroundColor: color }}>
-        <LeafTitle style={{ textDecoration: isSelectedTab ? 'underline' : 'none' }}>
-          {title}
-        </LeafTitle>
+    <Wrapper color={color}>
+      <LeafContainer color={color}>
+        <LeafTitle isSelected={isSelectedTab}>{title}</LeafTitle>
       </LeafContainer>
     </Wrapper>
   );
 };
 
-const NodeContainer = styled.div(({ theme: antdTheme }) => ({
+const NodeContainer = styled.div<{ color: string; isClosed?: boolean }>(({ color, isClosed }) => ({
   display: 'flex',
   flexDirection: 'column',
   borderRadius: 4,
   borderWidth: 1,
   border: 'solid',
-  borderColor: antdTheme.token?.colorPrimary,
-  borderTopWidth: 0,
-  borderTopLeftRadius: 0,
-  borderTopRightRadius: 0,
+  borderColor: color,
+  borderTopWidth: isClosed ? 1 : 0,
+  borderTopLeftRadius: isClosed ? 4 : 0,
+  borderTopRightRadius: isClosed ? 4 : 0,
   padding: 8,
   paddingTop: 4,
+  cursor: 'pointer',
 }));
 
-const NodeTitle = styled(Typography)(({ theme }) => ({
-  color: theme.token?.colorPrimary,
+const NodeTitle = styled(Typography)<{ color: string }>(({ color }) => ({
   alignSelf: 'flex-start',
+  color,
 }));
 
 const TabContainer = styled.div({
@@ -170,6 +171,8 @@ const Node = ({
   state: NavigationState;
   parentColor: string;
 }) => {
+  const [isClosed, setIsClosed] = React.useState(false);
+
   const routes = state.routes;
   if (!routes || !routes.length) {
     return <Leaf title={name} color={parentColor} />;
@@ -179,8 +182,17 @@ const Node = ({
 
   const StackWrapper = state.type === 'tab' ? TabContainer : React.Fragment;
 
+  if (isClosed) {
+    return <ClosedNode name={name} color={color} openNode={() => setIsClosed(false)} />;
+  }
+
   return (
-    <NodeContainer style={{ borderColor: color }}>
+    <NodeContainer
+      color={color}
+      onClick={(e) => {
+        setIsClosed(true);
+        e.stopPropagation();
+      }}>
       <StackWrapper>
         {routes.toReversed().map((route, index) => (
           <React.Fragment key={index}>
@@ -199,7 +211,30 @@ const Node = ({
           </React.Fragment>
         ))}
       </StackWrapper>
-      <NodeTitle style={{ color }}>{name}</NodeTitle>
+      <NodeTitle color={color}>{name}</NodeTitle>
+    </NodeContainer>
+  );
+};
+
+const ClosedNode = ({
+  name,
+  color,
+  openNode,
+}: {
+  name: string;
+  color: string;
+  openNode: () => void;
+}) => {
+  return (
+    <NodeContainer
+      color={color}
+      style={{ borderColor: color }}
+      onClick={(e) => {
+        openNode();
+        e.stopPropagation();
+      }}
+      isClosed>
+      <NodeTitle color={color}>{name}</NodeTitle>
     </NodeContainer>
   );
 };
@@ -224,25 +259,27 @@ const generateColor = (key: string) => {
   return newColor;
 };
 
+const legendRed = 'hsl(0, 70%, 50%)';
+
 const Legend = () => {
   return (
     <div style={{ padding: 12 }}>
-      <NodeContainer style={{ borderColor: 'hsl(0, 70%, 50%)' }}>
-        <Leaf title="Screen" color="hsl(0, 70%, 50%)" />
+      <NodeContainer color={legendRed}>
+        <Leaf title="Screen" color={legendRed} />
         <div style={{ height: 4 }} />
-        <NodeTitle style={{ color: 'hsl(0, 70%, 50%)' }}>Stack Navigator</NodeTitle>
+        <NodeTitle color={legendRed}>Stack Navigator</NodeTitle>
       </NodeContainer>
       <div style={{ height: 12 }} />
-      <NodeContainer style={{ borderColor: 'hsl(0, 70%, 50%)' }}>
+      <NodeContainer color={legendRed}>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <Leaf title="Unselected Tab" color="hsl(0, 70%, 50%)" />
+          <Leaf title="Unselected Tab" color={legendRed} />
           <div style={{ width: 4 }} />
-          <SelectedLeafContainer style={{ borderColor: 'hsl(0, 70%, 50%)' }}>
-            <Leaf title="Selected Tab" color="hsl(0, 70%, 50%)" />
+          <SelectedLeafContainer color={legendRed}>
+            <Leaf title="Selected Tab" color={legendRed} />
           </SelectedLeafContainer>
         </div>
         <div style={{ height: 4 }} />
-        <NodeTitle style={{ color: 'hsl(0, 70%, 50%)' }}>Tab Navigator</NodeTitle>
+        <NodeTitle color={legendRed}>Tab Navigator</NodeTitle>
       </NodeContainer>
     </div>
   );
