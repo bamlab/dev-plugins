@@ -244,8 +244,6 @@ let currentHue = 0;
 
 const generateColor = (key: string) => {
   if (colorMap[key]) {
-    console.log(key);
-
     return colorMap[key];
   }
 
@@ -253,8 +251,6 @@ const generateColor = (key: string) => {
   const newColor = `hsl(${currentHue}, 70%, 50%)`;
 
   colorMap[key] = newColor;
-
-  console.log(newColor);
 
   return newColor;
 };
