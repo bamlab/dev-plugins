@@ -154,6 +154,11 @@ const NodeTitle = styled(Typography)<{ color: string }>(({ color }) => ({
   color,
 }));
 
+const ClosedNodeTitle = styled(Typography)<{ color: string }>(({ color }) => ({
+  alignSelf: 'center',
+  color,
+}));
+
 const TabContainer = styled.div({
   display: 'flex',
   flex: 1,
@@ -234,7 +239,7 @@ const ClosedNode = ({
         e.stopPropagation();
       }}
       isClosed>
-      <NodeTitle color={color}>{name}</NodeTitle>
+      <ClosedNodeTitle color={color}>{name}</ClosedNodeTitle>
     </NodeContainer>
   );
 };
