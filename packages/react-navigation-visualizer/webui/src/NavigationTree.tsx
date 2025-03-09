@@ -249,22 +249,35 @@ const ClosedNode = ({
 };
 
 const colorMap: Record<string, string> = {};
-let currentHue = 0;
+let currentIndex = 0;
+
+const colorList = [
+  '#EF5350',
+  '#EC407A',
+  '#AB47BC',
+  '#7E57C2',
+  '#5C6BC0',
+  '#42A5F5',
+  '#29B6F6',
+  '#26C6DA',
+  '#26A69A',
+  '#66BB6A',
+];
 
 const generateColor = (key: string) => {
   if (colorMap[key]) {
     return colorMap[key];
   }
 
-  currentHue = (currentHue + 15) % 360;
-  const newColor = `hsl(${currentHue}, 70%, 50%)`;
+  currentIndex = (currentIndex + 1) % colorList.length;
+  const newColor = colorList[currentIndex];
 
   colorMap[key] = newColor;
 
   return newColor;
 };
 
-const legendRed = 'hsl(0, 70%, 50%)';
+const legendRed = '#EF5350';
 
 const Legend = () => {
   return (
