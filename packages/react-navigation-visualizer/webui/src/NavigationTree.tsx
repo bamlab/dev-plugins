@@ -147,6 +147,10 @@ const NodeContainer = styled.div<{ color: string; isClosed?: boolean }>(({ color
   padding: 8,
   paddingTop: 4,
   cursor: 'pointer',
+  backgroundColor: 'transparent',
+  ':hover:not(:has(:hover))': {
+    backgroundColor: `${color}30`,
+  },
 }));
 
 const NodeTitle = styled(Typography)<{ color: string }>(({ color }) => ({
