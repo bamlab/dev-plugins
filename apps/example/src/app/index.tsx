@@ -8,14 +8,7 @@ export default function TesterScreen() {
     <SafeAreaView style={styles.outerContainer}>
       <Stack.Screen options={{ headerShown: false }} />
       <View style={styles.container}>
-        <TestCase title="Apollo Client" route="/apollo-client/" />
-        <TestCase title="React Query" route="/react-query/" />
-        <TestCase title="React Query Time" route="/react-query-time/" />
-        <TestCase title="TinyBase" route="/tinybase/" />
-        <TestCase title="Vanilla Log Viewer" route="/vanilla-log-viewer/" />
-        <TestCase title="Async Storage" route="/async-storage/" />
         <TestCase title="React Native MMKV" route="/react-native-mmkv/" />
-        <TestCase title="Redux" route="/redux/" />
         <TestCase title="Example stacks" route="/example-stack/" />
       </View>
     </SafeAreaView>
