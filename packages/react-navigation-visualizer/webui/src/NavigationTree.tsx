@@ -9,44 +9,27 @@ type Props = StoreType;
 
 export function NavigationTree({ logs }: Props) {
   const currentNavigationItem = logs[logs.length - 1];
-  const previousNavigationItem = logs[logs.length - 2];
 
   const currentNavigationItemState = currentNavigationItem?.state;
-  const previousNavigationItemState = previousNavigationItem?.state;
 
   const hasCurrentItem = !!currentNavigationItem && currentNavigationItemState;
-  const hasPreviousItem = !!previousNavigationItem && previousNavigationItemState;
+
 
   return (
     <Layout>
       <Layout.Content style={{ height: '100vh', overflow: 'auto', paddingBottom: '60px' }}>
         <Container>
-          <HalfContainer>
-            <Typography>Previous state</Typography>
-            <Spacer />
-            <HalfContent>
-              {hasPreviousItem && (
-                <Node
-                  name="root"
-                  state={previousNavigationItemState}
-                  parentColor={generateColor(previousNavigationItemState.key)}
-                />
-              )}
-            </HalfContent>
-          </HalfContainer>
-          <HalfContainer>
-            <Typography>Current state</Typography>
-            <Spacer />
-            <HalfContent>
-              {hasCurrentItem && (
-                <Node
-                  name="root"
-                  state={currentNavigationItemState}
-                  parentColor={generateColor(currentNavigationItemState.key)}
-                />
-              )}
-            </HalfContent>
-          </HalfContainer>
+          {logs.toReversed().map((log, index) => (
+            <HalfContainer key={logs.length - index}>
+              <Typography>Navigation state n°{logs.length - index}</Typography>
+              <Spacer />
+              <HalfContent>
+                {log.state && (
+                  <Node name="root" state={log.state} parentColor={generateColor(log.state.key)} />
+                )}
+              </HalfContent>
+            </HalfContainer>
+          ))}
         </Container>
       </Layout.Content>
       {hasCurrentItem ? (
@@ -63,8 +46,10 @@ export function NavigationTree({ logs }: Props) {
 
 const Container = styled.div({
   display: 'flex',
-  flexDirection: 'row',
+  flexDirection: 'row-reverse',
   height: '100%',
+  overflow: 'auto',
+  overflowX: 'scroll',
   flex: 1,
 });
 
@@ -74,7 +59,7 @@ const HalfContainer = styled.div({
   alignItems: 'center',
   overflow: 'auto',
   height: '100%',
-  flex: 1,
+  minWidth: '35vw',
 });
 
 const HalfContent = styled.div({
