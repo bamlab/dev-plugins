@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import { Layout, Typography } from 'antd';
+import { Button, Layout, Typography } from 'antd';
+import { toPng } from 'html-to-image';
 import * as React from 'react';
 
 import { Sidebar } from './Sidebar';
@@ -8,45 +9,66 @@ import type { NavigationState, StoreType } from './types';
 type Props = StoreType;
 
 export function NavigationTree({ logs }: Props) {
+  const containerRef = React.useRef<HTMLDivElement>(null);
   const currentNavigationItem = logs[logs.length - 1];
-  const previousNavigationItem = logs[logs.length - 2];
 
   const currentNavigationItemState = currentNavigationItem?.state;
-  const previousNavigationItemState = previousNavigationItem?.state;
 
   const hasCurrentItem = !!currentNavigationItem && currentNavigationItemState;
-  const hasPreviousItem = !!previousNavigationItem && previousNavigationItemState;
+
+  const handleScreenshot = async () => {
+    if (!containerRef.current) return;
+
+    try {
+      const options = {
+        quality: 1.0,
+        pixelRatio: 2,
+        backgroundColor: '#ffffff',
+        style: {
+          transform: 'scale(1)',
+          transformOrigin: 'top left',
+        },
+        width: containerRef.current.scrollWidth,
+        height: containerRef.current.scrollHeight,
+        scrollX: 0,
+        scrollY: 0,
+        useCORS: true,
+      };
+
+      // Create download link
+      const link = document.createElement('a');
+      link.href = await toPng(containerRef.current, options);
+      link.download = `navigation-tree-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Failed to capture screenshot:', error);
+    }
+  };
 
   return (
     <Layout>
       <Layout.Content style={{ height: '100vh', overflow: 'auto', paddingBottom: '60px' }}>
-        <Container>
-          <HalfContainer>
-            <Typography>Previous state</Typography>
-            <Spacer />
-            <HalfContent>
-              {hasPreviousItem && (
-                <Node
-                  name="root"
-                  state={previousNavigationItemState}
-                  parentColor={generateColor(previousNavigationItemState.key)}
-                />
-              )}
-            </HalfContent>
-          </HalfContainer>
-          <HalfContainer>
-            <Typography>Current state</Typography>
-            <Spacer />
-            <HalfContent>
-              {hasCurrentItem && (
-                <Node
-                  name="root"
-                  state={currentNavigationItemState}
-                  parentColor={generateColor(currentNavigationItemState.key)}
-                />
-              )}
-            </HalfContent>
-          </HalfContainer>
+        <ScreenshotButtonContainer>
+          <Button.Group>
+            <Button type="primary" onClick={handleScreenshot}>
+              📸 Download state history
+            </Button>
+          </Button.Group>
+        </ScreenshotButtonContainer>
+        <Container ref={containerRef}>
+          {logs.toReversed().map((log, index) => (
+            <HalfContainer key={logs.length - index}>
+              <Typography>Navigation state n°{logs.length - index}</Typography>
+              <Spacer />
+              <HalfContent>
+                {log.state && (
+                  <Node name="root" state={log.state} parentColor={generateColor(log.state.key)} />
+                )}
+              </HalfContent>
+            </HalfContainer>
+          ))}
         </Container>
       </Layout.Content>
       {hasCurrentItem ? (
@@ -61,10 +83,18 @@ export function NavigationTree({ logs }: Props) {
   );
 }
 
+const ScreenshotButtonContainer = styled.div({
+  position: 'absolute',
+  right: 16,
+  zIndex: 1000,
+});
+
 const Container = styled.div({
   display: 'flex',
-  flexDirection: 'row',
+  flexDirection: 'row-reverse',
   height: '100%',
+  overflow: 'auto',
+  overflowX: 'scroll',
   flex: 1,
 });
 
@@ -74,7 +104,7 @@ const HalfContainer = styled.div({
   alignItems: 'center',
   overflow: 'auto',
   height: '100%',
-  flex: 1,
+  minWidth: '35vw',
 });
 
 const HalfContent = styled.div({

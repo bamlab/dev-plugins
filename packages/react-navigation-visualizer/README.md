@@ -74,4 +74,4 @@ Three types of elements are represented :
 
   ![alt text](./assets/screen_example.png)
 
-You can see the current and previous (last iteration) navigation states, and you can also collapse stacks if needed by clicking them.
+You can see all consecutive navigation states (recorded when the dev plugin is opened), and you can also collapse stacks if needed by clicking them.
