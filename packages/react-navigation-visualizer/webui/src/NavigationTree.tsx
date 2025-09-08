@@ -63,8 +63,12 @@ export function NavigationTree({ logs }: Props) {
               <Typography>Navigation state n°{logs.length - index}</Typography>
               <Spacer />
               <HalfContent>
-                {log.state && (
-                  <Node name="root" state={log.state} parentColor={generateColor(log.state.key)} />
+                {log.state && log.state.routes[0] && log.state.routes[0].state && (
+                  <Node
+                    name={log.state.routes[0].name}
+                    state={log.state.routes[0].state}
+                    parentColor={generateColor(log.state.key)}
+                  />
                 )}
               </HalfContent>
             </HalfContainer>
@@ -128,6 +132,7 @@ const LeafContainer = styled.div<{ color: string }>(({ color }) => ({
   alignItems: 'center',
   justifyContent: 'center',
   padding: 8,
+  cursor: 'default',
 }));
 
 const SelectedLeafContainer = styled.div<{ color: string }>(({ color }) => ({
@@ -157,7 +162,11 @@ const Leaf = ({
   const Wrapper = isSelectedTab ? SelectedLeafContainer : React.Fragment;
   return (
     <Wrapper color={color}>
-      <LeafContainer color={color}>
+      <LeafContainer
+        color={color}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}>
         <LeafTitle isSelected={isSelectedTab}>{title}</LeafTitle>
       </LeafContainer>
     </Wrapper>

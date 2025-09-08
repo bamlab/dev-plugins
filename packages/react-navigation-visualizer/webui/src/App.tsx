@@ -28,11 +28,11 @@ export default function App() {
           <TabsContent tab={<TabLabel>Logs</TabLabel>} key="logs">
             <Logs active={activeKey === 'logs'} {...store} />
           </TabsContent>
-          <TabsContent tab={<TabLabel>Linking</TabLabel>} key="linking">
-            <LinkingTester active={activeKey === 'linking'} {...store} />
-          </TabsContent>
           <TabsContent tab={<TabLabel>Stack Visualization</TabLabel>} key="navigationTree">
             <NavigationTree {...store} />
+          </TabsContent>
+          <TabsContent tab={<TabLabel>Linking</TabLabel>} key="linking">
+            <LinkingTester active={activeKey === 'linking'} {...store} />
           </TabsContent>
         </Tabs>
       </Container>

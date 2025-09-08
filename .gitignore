@@ -20,7 +20,7 @@ web-build/
 .metro-health-check*
 
 # plugins build files
-packages/*/build
+packages/*/build/
 
 # debug
 npm-debug.*
