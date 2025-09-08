@@ -19,8 +19,8 @@ web-build/
 # Metro
 .metro-health-check*
 
-# create-dev-plugin
-packages/create-dev-plugin/build
+# plugins build files
+packages/*/build
 
 # debug
 npm-debug.*
