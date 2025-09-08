@@ -14,7 +14,7 @@
     "prepublishOnly": "expo-module prepublishOnly",
     "expo-module": "expo-module"
   },
-  "homepage": "https://docs.expo.dev/versions/latest/sdk/image/",
+  "homepage": "https://github.com/bamlab/dev-plugins.git#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bamlab/dev-plugins.git",
