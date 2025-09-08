@@ -128,6 +128,7 @@ const LeafContainer = styled.div<{ color: string }>(({ color }) => ({
   alignItems: 'center',
   justifyContent: 'center',
   padding: 8,
+  cursor: 'default',
 }));
 
 const SelectedLeafContainer = styled.div<{ color: string }>(({ color }) => ({
@@ -157,7 +158,11 @@ const Leaf = ({
   const Wrapper = isSelectedTab ? SelectedLeafContainer : React.Fragment;
   return (
     <Wrapper color={color}>
-      <LeafContainer color={color}>
+      <LeafContainer
+        color={color}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}>
         <LeafTitle isSelected={isSelectedTab}>{title}</LeafTitle>
       </LeafContainer>
     </Wrapper>
