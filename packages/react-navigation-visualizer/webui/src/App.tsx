@@ -5,7 +5,7 @@ import * as React from 'react';
 
 import { LinkingTester } from './LinkingTester';
 import { Logs } from './Logs';
-import { NavigationTree } from './NavigationTree';
+import { NavigationTree } from './NavigationTree/NavigationTree';
 import { theme } from './theme';
 import { usePluginStore } from './usePluginStore';
 

@@ -3,9 +3,9 @@ import { Button, Layout, Typography } from 'antd';
 import { toPng } from 'html-to-image';
 import * as React from 'react';
 
-import { Sidebar } from './Sidebar';
-import { Title4 } from './Typography';
-import type { NavigationState, StoreType } from './types';
+import { Sidebar } from '../Sidebar';
+import { Title4 } from '../Typography';
+import type { NavigationState, StoreType } from '../types';
 
 type Props = StoreType;
 
