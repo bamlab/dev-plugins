@@ -4,6 +4,7 @@ import { toPng } from 'html-to-image';
 import * as React from 'react';
 
 import { Sidebar } from './Sidebar';
+import { Title4 } from './Typography';
 import type { NavigationState, StoreType } from './types';
 
 type Props = StoreType;
@@ -77,7 +78,12 @@ export function NavigationTree({ logs }: Props) {
       </Layout.Content>
       {hasCurrentItem ? (
         <Sidebar
-          Legend={<Legend />}
+          TopElement={
+            <>
+              <Title4>Legend</Title4>
+              <Legend />
+            </>
+          }
           action={currentNavigationItem.action}
           state={currentNavigationItem.state}
           stack={currentNavigationItem.stack}

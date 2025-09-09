@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { Layout } from 'antd';
-
 import * as React from 'react';
 import ReactJson from 'react-json-view';
 
@@ -11,12 +10,12 @@ export function Sidebar({
   action,
   state,
   stack,
-  Legend,
+  TopElement,
 }: {
   action: object;
   state: object | undefined;
   stack?: string | undefined;
-  Legend?: React.ReactNode;
+  TopElement?: React.ReactNode;
 }) {
   return (
     <Layout.Sider
@@ -79,12 +78,7 @@ export function Sidebar({
           </Code>
         </>
       ) : null}
-      {Legend && (
-        <>
-          <Title4>Legend</Title4>
-          {Legend}
-        </>
-      )}
+      {TopElement}
       <Title4>Action</Title4>
       <ReactJson src={action} collapsed />
       <Title4>State</Title4>
