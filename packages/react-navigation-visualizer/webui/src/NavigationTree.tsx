@@ -51,13 +51,6 @@ export function NavigationTree({ logs }: Props) {
   return (
     <Layout>
       <Layout.Content style={{ height: '100vh', overflow: 'auto', paddingBottom: '60px' }}>
-        <ScreenshotButtonContainer>
-          <Button.Group>
-            <Button type="primary" onClick={handleScreenshot}>
-              📸 Download state history
-            </Button>
-          </Button.Group>
-        </ScreenshotButtonContainer>
         <Container ref={containerRef}>
           {logs.toReversed().map((log, index) => (
             <HalfContainer key={logs.length - index}>
@@ -80,6 +73,12 @@ export function NavigationTree({ logs }: Props) {
         <Sidebar
           TopElement={
             <>
+              <Title4>Actions</Title4>
+              <Button.Group>
+                <Button type="primary" onClick={handleScreenshot}>
+                  📸 Download state history
+                </Button>
+              </Button.Group>
               <Title4>Legend</Title4>
               <Legend />
             </>
@@ -92,12 +91,6 @@ export function NavigationTree({ logs }: Props) {
     </Layout>
   );
 }
-
-const ScreenshotButtonContainer = styled.div({
-  position: 'absolute',
-  right: 16,
-  zIndex: 1000,
-});
 
 const Container = styled.div({
   display: 'flex',

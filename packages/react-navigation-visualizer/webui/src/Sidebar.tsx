@@ -79,9 +79,9 @@ export function Sidebar({
         </>
       ) : null}
       {TopElement}
-      <Title4>Action</Title4>
+      <Title4>Navigation Action</Title4>
       <ReactJson src={action} collapsed />
-      <Title4>State</Title4>
+      <Title4>Navigation State</Title4>
       <ReactJson src={state ?? {}} collapsed />
     </Layout.Sider>
   );
