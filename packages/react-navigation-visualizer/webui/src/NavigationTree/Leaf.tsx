@@ -6,10 +6,12 @@ export const Leaf = ({
   title,
   isSelectedTab,
   color,
+  subtitle,
 }: {
   title: string;
   isSelectedTab?: boolean;
   color: string;
+  subtitle?: string;
 }) => {
   const Wrapper = isSelectedTab ? SelectedLeafContainer : React.Fragment;
   return (
@@ -20,6 +22,7 @@ export const Leaf = ({
           e.stopPropagation();
         }}>
         <LeafTitle isSelected={isSelectedTab}>{title}</LeafTitle>
+        {subtitle ? <LeafTitle>{subtitle}</LeafTitle> : null}
       </LeafContainer>
     </Wrapper>
   );
@@ -27,6 +30,7 @@ export const Leaf = ({
 
 const LeafContainer = styled.div<{ color: string }>(({ color }) => ({
   display: 'flex',
+  flexDirection: 'column',
   flexGrow: 1,
   borderRadius: 4,
   backgroundColor: color,

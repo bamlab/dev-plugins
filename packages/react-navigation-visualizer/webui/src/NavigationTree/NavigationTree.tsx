@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button, Layout, Typography } from 'antd';
+import { Button, Checkbox, Layout, Typography } from 'antd';
 import { toPng } from 'html-to-image';
 import * as React from 'react';
 
@@ -12,6 +12,8 @@ import { NavigationTreeLegend } from './NavigationTreeLegend';
 type Props = StoreType;
 
 export function NavigationTree({ logs }: Props) {
+  const [isParamsVisible, setIsParamsVisible] = React.useState(false);
+
   const containerRef = React.useRef<HTMLDivElement>(null);
   const currentNavigationItem = logs[logs.length - 1];
 
@@ -64,6 +66,7 @@ export function NavigationTree({ logs }: Props) {
                     name={log.state.routes[0].name}
                     state={log.state.routes[0].state}
                     parentColor={generateColor(log.state.key)}
+                    isParamsVisible={isParamsVisible}
                   />
                 )}
               </HalfContent>
@@ -76,11 +79,21 @@ export function NavigationTree({ logs }: Props) {
           TopElement={
             <>
               <Title4>Actions</Title4>
+              <Spacer />
               <Button.Group>
                 <Button type="primary" onClick={handleScreenshot}>
                   📸 Download state history
                 </Button>
               </Button.Group>
+              <Spacer />
+              <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
+                <Checkbox
+                  checked={isParamsVisible}
+                  onChange={(e) => setIsParamsVisible(e.target.checked)}
+                />
+                <Spacer />
+                <Typography.Text>Show navigation params</Typography.Text>
+              </div>
               <Title4>Legend</Title4>
               <NavigationTreeLegend />
             </>

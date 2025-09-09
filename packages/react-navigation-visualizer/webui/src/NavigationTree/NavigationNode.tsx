@@ -10,10 +10,14 @@ export const NavigationNode = ({
   name,
   state,
   parentColor,
+  params,
+  isParamsVisible,
 }: {
   name: string;
   state: NavigationState;
   parentColor: string;
+  params?: object;
+  isParamsVisible?: boolean;
 }) => {
   const [isClosed, setIsClosed] = React.useState(false);
 
@@ -41,10 +45,21 @@ export const NavigationNode = ({
         {routes.toReversed().map((route, index) => (
           <React.Fragment key={route.key}>
             {route.state?.routes && route.state.routes.length ? (
-              <NavigationNode name={route.name} state={route.state} parentColor={color} />
+              <NavigationNode
+                name={route.name}
+                state={route.state}
+                parentColor={color}
+                params={route.params}
+                isParamsVisible={isParamsVisible}
+              />
             ) : (
               <Leaf
                 title={route.name}
+                subtitle={
+                  isParamsVisible && route.params && Object.keys(route.params).length > 0
+                    ? `${JSON.stringify(route.params)}`
+                    : undefined
+                }
                 isSelectedTab={
                   state.type === 'tab' && state.index === state.routes.length - 1 - index
                 }
