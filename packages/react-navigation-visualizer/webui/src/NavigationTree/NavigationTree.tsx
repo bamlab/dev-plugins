@@ -86,11 +86,10 @@ export function NavigationTree({ logs }: Props) {
                 </Button>
               </Button.Group>
               <Spacer />
-              <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
-                <Checkbox
-                  checked={isParamsVisible}
-                  onChange={(e) => setIsParamsVisible(e.target.checked)}
-                />
+              <div
+                style={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}
+                onClick={() => setIsParamsVisible(!isParamsVisible)}>
+                <Checkbox checked={isParamsVisible} />
                 <Spacer />
                 <Typography.Text>Show navigation params</Typography.Text>
               </div>
@@ -114,6 +113,7 @@ const Container = styled.div({
   overflow: 'auto',
   overflowX: 'scroll',
   flex: 1,
+  paddingBottom: 12,
 });
 
 const HalfContainer = styled.div({
@@ -122,7 +122,7 @@ const HalfContainer = styled.div({
   alignItems: 'center',
   overflow: 'auto',
   height: '100%',
-  minWidth: '35vw',
+  minWidth: '34vw',
 });
 
 const HalfContent = styled.div({
