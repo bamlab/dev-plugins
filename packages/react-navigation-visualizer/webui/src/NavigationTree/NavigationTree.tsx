@@ -61,10 +61,10 @@ export function NavigationTree({ logs }: Props) {
               <Typography>Navigation state n°{logs.length - index}</Typography>
               <Spacer />
               <HalfContent>
-                {log.state && log.state.routes[0] && log.state.routes[0].state && (
+                {log.state && (
                   <NavigationNode
-                    name={log.state.routes[0].name}
-                    state={log.state.routes[0].state}
+                    name="root"
+                    state={log.state}
                     parentColor={generateColor(log.state.key)}
                     isParamsVisible={isParamsVisible}
                   />
