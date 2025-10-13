@@ -1,6 +1,6 @@
 {
   "name": "@bam.tech/react-navigation-visualizer-dev-plugin",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "Visualization Tool based on Expo DevTools Plugin for React Navigation",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -45,6 +45,6 @@
   },
   "peerDependencies": {
     "@react-navigation/core": "*",
-    "expo": "^53.0.9"
+    "expo": ">=53.0.5"
   }
 }
