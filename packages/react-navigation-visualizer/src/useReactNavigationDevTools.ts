@@ -1,13 +1,17 @@
-import type { NavigationContainerRefWithCurrent } from '@react-navigation/core';
 import { useReduxDevToolsExtension } from '@react-navigation/devtools';
 import { useDevToolsPluginClient, type EventSubscription } from 'expo/devtools';
 import { useEffect, useRef } from 'react';
 
 import { ReduxExtensionAdapter } from './ReduxExtensionAdapter';
 
-export function useReactNavigationDevTools<T extends object = any>(
-  ref: NavigationContainerRefWithCurrent<T>
-) {
+type NavigationContainerRef = {
+  current: object | null;
+};
+
+/**
+ * @param ref - The ref returned by `useNavigationContainerRef()` from `expo-router` or `@react-navigation/native`
+ */
+export function useReactNavigationDevTools(ref: NavigationContainerRef) {
   const client = useDevToolsPluginClient('react-navigation');
   const adapterRef = useRef(new ReduxExtensionAdapter());
   // @ts-ignore: Override global
